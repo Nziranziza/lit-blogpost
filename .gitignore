@@ -4,3 +4,5 @@ server/dist/*
 package-lock.json
 error.log
 combined.log
+shrinkwrap.yaml
+coverage
