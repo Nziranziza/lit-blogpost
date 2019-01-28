@@ -8,7 +8,7 @@
     "start": "npm run build && node ./server/dist/index.js",
     "dev": "nodemon --exec babel-node  ./server/src/index.js",
     "test": "jest",
-    "coveralls": "NODE_ENV=test jest --coverage && cat ./tests/coverage/lcov.info | coveralls"
+    "coveralls": "NODE_ENV=test jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "babel-jest": "24.0.0",
-    "babel-node": "^6.5.3",
     "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.12.1",
