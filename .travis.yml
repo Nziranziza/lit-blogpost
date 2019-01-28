@@ -5,6 +5,9 @@ node_js:
 cache:
   directories:
     - node_modules
+branches:
+  only:
+    - develop
 install:
   - npm install
   - npm install -g jest
