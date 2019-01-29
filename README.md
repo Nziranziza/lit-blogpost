@@ -7,11 +7,12 @@
 ## Get Started
 
 Clone the repo: `git clone https://github.com/oesukam/lit-blogpost.git`
+Set up dev environment: `duplicate .env.example`
 Install packages:`npm install`
 Run the development server: `npm run dev`
 
 ## Sequelize Commands
 
-Installing Sequelize-cli => npm i sequelize-cli
+Installing Sequelize-cli => npm i sequelize-cli -g
 create Models => $ sequelize model:create --name User --attributes name:string, email:string
 Migrate Database => $ sequelize db:migrate
