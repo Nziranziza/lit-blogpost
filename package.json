@@ -8,7 +8,7 @@
     "start": "npm run build && node ./server/dist/index.js",
     "dev": "nodemon --exec babel-node  ./server/src/index.js",
     "test": "jest",
-    "coveralls": "NODE_ENV=test jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
