@@ -8,7 +8,7 @@ describe('User model', () => {
     });
   });
 
-  test.only('Create a user', () => {
+  test('Create a user', () => {
     return User.create({ ...user }).then(res => {
       expect(res.get()).toHaveProperty('email', user.email);
     });
