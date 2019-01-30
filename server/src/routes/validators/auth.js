@@ -17,7 +17,17 @@ const signup = {
   gender: Joi.string().valid('Male', 'Female'),
   birthDate: Joi.date()
 };
+const login = {
+  password: Joi.string()
+    .required()
+    .min(6),
+  email: Joi.string()
+    .email()
+    .required()
+    .trim()
+};
 
 export default {
-  signup
+  signup,
+  login
 };
