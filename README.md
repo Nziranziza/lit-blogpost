@@ -14,5 +14,7 @@ Run the development server: `npm run dev`
 ## Sequelize Commands
 
 Installing Sequelize-cli => npm i sequelize-cli -g
-create Models => $ sequelize model:create --name User --attributes name:string, email:string
-Migrate Database => $ sequelize db:migrate
+
+create Models => \$ sequelize model:create --name User --attributes name:string, email:string
+
+Migrate Database => \$ sequelize db:migrate

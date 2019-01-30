@@ -5,7 +5,7 @@ const joiErrors = () => (err, req, res, next) => {
   return res.status(400).json({
     success: false,
     message: 'Bad Request',
-    errFields: err.details || undefined
+    validators: err.details || undefined
   });
 };
 
