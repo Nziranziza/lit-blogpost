@@ -7,7 +7,7 @@ env:
   global:
     - NODE_ENV=development
     - JWT_SECRET=lit_blog@secret
-    - DATABASE_URL=postgresql://lit_blog:lit_blog@localhost/lig_blog
+    - DATABASE_URL=postgresql://lit_blog:lit_blog@localhost/lit_blog
 language: node_js
 node_js:
   - '10'

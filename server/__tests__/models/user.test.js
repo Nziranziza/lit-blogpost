@@ -25,7 +25,6 @@ describe('User model', () => {
       { firstName: 'Olivier' },
       { where: { email: user.email }, returning: true, plain: true }
     ).then(res => {
-      console.log(res[0], res[1][0]);
       expect(res[0]).toBe(1);
     });
   });
