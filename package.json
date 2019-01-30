@@ -7,8 +7,9 @@
     "build": "babel ./server/src --out-dir ./server/dist",
     "start": "npm run build && node ./server/dist/index.js",
     "dev": "nodemon --exec babel-node  ./server/src/index.js",
-    "test": "jest",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "test": "jest --detectOpenHandles",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "db:migrate": "node_modules/.bin/sequelize db:migrate"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/oesukam/lit-blogpost#readme",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "celebrate": "^9.0.2",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
@@ -30,6 +32,7 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.4.0",
+    "uuid": "^3.3.2",
     "winston": "^3.2.0"
   },
   "devDependencies": {

@@ -1,4 +1,13 @@
 sudo: false
+services:
+  - postgresql
+addons:
+  postgresql: '9.5'
+env:
+  global:
+    - NODE_ENV=development
+    - JWT_SECRET=lit_blog@secret
+    - DATABASE_URL=postgresql://lit_blog:lit_blog@localhost/lit_blog
 language: node_js
 node_js:
   - '10'
@@ -8,9 +17,15 @@ cache:
 branches:
   only:
     - develop
+before_install:
+  - cp server/src/database/config/config.example.json server/src/database/config/config.json
 install:
   - npm install
-  - npm install -g jest
+  - npm install -g jest sequelize-cli
+before_script:
+  - psql -c 'create database lit_blog;' -U postgres
+  - psql -c "CREATE USER lit_blog WITH PASSWORD 'lit_blog';" -U postgres
+  - npm run db:migrate
 script:
   - npm run test
 after_success:
