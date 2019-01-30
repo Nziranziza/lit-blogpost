@@ -12,7 +12,7 @@ export default class Auth {
     let token;
     const { body } = req;
     try {
-      user = await User.find({ where: { email: body.email } });
+      user = await User.findOne({ where: { email: body.email } });
       if (user) {
         return res
           .status(401)

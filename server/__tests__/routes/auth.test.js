@@ -4,8 +4,10 @@ import { user } from '../mocks/db.json';
 import { urlPrefix } from '../mocks/variables.json';
 import app from '../../src/server';
 
+console.log('Checking');
 describe('auth', () => {
   beforeAll(() => {
+    console.log('before');
     return User.destroy({
       where: { email: user.email }
     }).then(() => true);
