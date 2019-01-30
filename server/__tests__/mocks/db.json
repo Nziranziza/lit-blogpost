@@ -1,0 +1,8 @@
+{
+  "user": {
+    "email": "test@email.com",
+    "password": "test@test",
+    "firstName": "test",
+    "lastName": "test"
+  }
+}
