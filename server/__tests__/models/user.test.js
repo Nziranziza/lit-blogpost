@@ -5,7 +5,7 @@ describe('User model', () => {
   beforeAll(() => {
     return User.destroy({
       where: { email: user.email }
-    }).then(() => true);
+    });
   });
 
   test('Create a user', () => {
@@ -15,7 +15,7 @@ describe('User model', () => {
   });
 
   test('Find a user', () => {
-    return User.find({ where: { email: user.email } }).then(res => {
+    return User.findOne({ where: { email: user.email } }).then(res => {
       expect(res.get()).toHaveProperty('email', user.email);
     });
   });

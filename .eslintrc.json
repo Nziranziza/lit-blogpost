@@ -1,6 +1,16 @@
 {
   "env": {
+    "node": true,
+    "es6": true,
     "jest/globals": true
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-plugin-root-import": {
+        "rootPathPrefix": "~",
+        "rootPathSuffix": "server/src"
+      }
+    }
   },
   "extends": ["airbnb-base", "prettier"],
   "plugins": ["jest", "prettier"],
