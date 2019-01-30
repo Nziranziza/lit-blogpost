@@ -25,7 +25,8 @@ describe('User model', () => {
       { firstName: 'Olivier' },
       { where: { email: user.email }, returning: true, plain: true }
     ).then(res => {
-      expect(res[0]).toBe(1);
+      const [, userData] = res;
+      expect(userData.firstName).toBe('Olivier');
     });
   });
 
