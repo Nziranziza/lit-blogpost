@@ -3,14 +3,18 @@ import 'dotenv/config';
 import cors from 'cors';
 import helmet from 'helmet';
 import joiErrors from './middlewares/joiErrors';
+import * as routes from './routes';
 
 const app = express();
-const { NODE_ENV } = process.env;
+const { NODE_ENV, API_VERSION = 'v1' } = process.env;
+const routePrefix = `/api/${API_VERSION}`;
 
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+
+app.use(`${routePrefix}/auth`, routes.auth);
 
 // Apply Celebrate middleware to handle joi errors
 app.use(joiErrors());

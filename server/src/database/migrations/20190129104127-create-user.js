@@ -17,6 +17,11 @@ module.exports = {
       },
       password: Sequelize.STRING,
       gender: Sequelize.STRING,
+      birthDate: Sequelize.STRING,
+      userType: {
+        type: Sequelize.STRING,
+        defaultValue: 'user'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
