@@ -17,6 +17,8 @@ cache:
 branches:
   only:
     - develop
+before_install:
+  - cp server/src/database/config/config.example.json server/src/database/config/config.json
 install:
   - npm install
   - npm install -g jest sequelize-cli
