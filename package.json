@@ -23,6 +23,7 @@
   "homepage": "https://github.com/oesukam/lit-blogpost#readme",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "bcrypt": "^3.0.3",
     "celebrate": "^9.0.2",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "babel-jest": "24.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.12.1",

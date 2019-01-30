@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import { User, Token } from '../database/models';
 import { logger } from '../helpers';
 
@@ -17,7 +18,8 @@ export default class Auth {
           .status(401)
           .json({ status: 401, message: `${body.email} account already exist` });
       }
-      user = await User.create(body);
+      const password = await bcrypt.hash(body.password, 10);
+      user = await User.create({ ...body, password });
 
       token = jwt.sign({ id: user.id, userType: user.userType }, JWT_SECRET);
       await user.createToken({ token });
@@ -25,12 +27,12 @@ export default class Auth {
       logger.log('Could not save the user', error);
       return res.status(401).json({ status: 401, message: 'Please try again' });
     }
-
+    const { password, ...userData } = user.get();
     return res.status(201).json({
       status: 201,
       message: 'Account created sucessfully',
       token,
-      data: user.get()
+      data: userData
     });
   }
 }

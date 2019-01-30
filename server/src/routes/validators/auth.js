@@ -7,14 +7,14 @@ const signup = {
   lastName: Joi.string()
     .required()
     .trim(),
-  password: Joi.string().min(6),
+  password: Joi.string()
+    .required()
+    .min(6),
   email: Joi.string()
     .email()
     .required()
     .trim(),
-  gender: Joi.string()
-    .required()
-    .valid('Male', 'Female'),
+  gender: Joi.string().valid('Male', 'Female'),
   birthDate: Joi.date()
 };
 
