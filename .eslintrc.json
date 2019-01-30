@@ -5,6 +5,8 @@
   "extends": ["airbnb-base", "prettier"],
   "plugins": ["jest", "prettier"],
   "rules": {
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "import/prefer-default-export": "off",
+    "consistent-return": 0
   }
 }
