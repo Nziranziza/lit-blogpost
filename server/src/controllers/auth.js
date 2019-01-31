@@ -35,4 +35,29 @@ export default class Auth {
       data: userData
     });
   }
+
+  static async login(req, res) {
+    let user;
+    const { body } = req;
+    try {
+      user = await User.findOne({ where: { email: body.email } });
+
+      if (!user) {
+        return res.status(404).json({ status: 404, message: 'User not found' });
+      }
+      const password = await bcrypt.compare(body.password, user.get().password);
+
+      if (!password) {
+        return res.status(401).json({ status: 401, message: "Email and password don't match" });
+      }
+    } catch (error) {
+      return res.status(401).json({ status: 401, message: 'Please try again' });
+    }
+    const { ...userData } = user.get();
+    return res.status(200).json({
+      status: 200,
+      message: 'User logged successfully',
+      data: userData
+    });
+  }
 }

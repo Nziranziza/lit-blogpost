@@ -12,5 +12,12 @@ router.post(
   }),
   auth.signup
 );
+router.post(
+  '/login',
+  celebrate({
+    body: authValidator.login
+  }),
+  auth.login
+);
 
 export default router;

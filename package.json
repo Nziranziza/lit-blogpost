@@ -6,10 +6,12 @@
   "scripts": {
     "build": "babel ./server/src --out-dir ./server/dist",
     "start": "npm run build && node ./server/dist/index.js",
-    "dev": "nodemon --exec babel-node  ./server/src/index.js",
+    "dev": "nodemon --exec babel-node ./server/src/index.js",
     "test": "jest --detectOpenHandles --forceExit",
     "coveralls": "jest --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
-    "db:migrate": "node_modules/.bin/sequelize db:migrate"
+    "db:migrate": "node_modules/.bin/sequelize db:migrate",
+    "db:migrate:fresh": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:migrate",
+    "db:seed": "node_modules/.bin/sequelize db:seed:all"
   },
   "repository": {
     "type": "git",
@@ -22,7 +24,7 @@
   },
   "homepage": "https://github.com/oesukam/lit-blogpost#readme",
   "dependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/node": "^7.2.2",
     "bcrypt": "^3.0.3",
     "celebrate": "^9.0.2",
     "cors": "^2.8.5",
@@ -30,6 +32,7 @@
     "express": "^4.16.4",
     "helmet": "^3.15.0",
     "jsonwebtoken": "^8.4.0",
+    "moment": "^2.24.0",
     "nodemailer": "^5.1.1",
     "pg": "^7.8.0",
     "pg-hstore": "^2.3.2",
