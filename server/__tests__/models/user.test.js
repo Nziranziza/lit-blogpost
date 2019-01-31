@@ -5,21 +5,17 @@ describe('User model', () => {
   beforeAll(() => {
     return User.destroy({
       where: { email: user.email }
-    })
-      .then(() => true)
-      .catch(err => console.log('before all', err));
+    });
   });
 
-  test.only('Create a user', () => {
-    return User.create({ ...user })
-      .then(res => {
-        expect(res.get()).toHaveProperty('email', user.email);
-      })
-      .catch(err => console.log('create test', err));
+  test('Create a user', () => {
+    return User.create({ ...user }).then(res => {
+      expect(res.get()).toHaveProperty('email', user.email);
+    });
   });
 
   test('Find a user', () => {
-    return User.find({ where: { email: user.email } }).then(res => {
+    return User.findOne({ where: { email: user.email } }).then(res => {
       expect(res.get()).toHaveProperty('email', user.email);
     });
   });

@@ -1,3 +1,4 @@
 import joiErrors from './joiErrors';
+import verifyToken from './verifyToken';
 
-export default { joiErrors };
+export { joiErrors, verifyToken };
