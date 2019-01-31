@@ -23,4 +23,24 @@ describe('auth', () => {
       .send({ ...user });
     expect(res.statusCode).toBe(201);
   });
+
+  test('login- pass', async () => {
+    const res = await request(app)
+      .post(`${urlPrefix}/auth/login`)
+      .send({ email: 'test@email.com', password: 'test@test' });
+    expect(res.statusCode).toBe(200);
+  });
+  test('login- user not found', async () => {
+    const res = await request(app)
+      .post(`${urlPrefix}/auth/login`)
+      .send({ email: 'fake@email.com', password: 'test@test' });
+    expect(res.statusCode).toBe(404);
+  });
+
+  test('login-wrong password', async () => {
+    const res = await request(app)
+      .post(`${urlPrefix}/auth/login`)
+      .send({ email: 'test@email.com', password: 'fake@fake' });
+    expect(res.statusCode).toBe(401);
+  });
 });

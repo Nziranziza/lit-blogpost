@@ -48,7 +48,7 @@ export default class Auth {
       const password = await bcrypt.compare(body.password, user.get().password);
 
       if (!password) {
-        return res.status(404).json({ status: 404, message: "Email and password don't match" });
+        return res.status(401).json({ status: 401, message: "Email and password don't match" });
       }
     } catch (error) {
       return res.status(401).json({ status: 401, message: 'Please try again' });
