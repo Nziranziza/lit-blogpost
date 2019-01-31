@@ -14,6 +14,8 @@ module.exports = {
       text: {
         type: Sequelize.TEXT
       },
+      status: Sequelize.TEXT,
+      tags: Sequelize.ARRAY(Sequelize.STRING),
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
