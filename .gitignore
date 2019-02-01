@@ -6,4 +6,3 @@ error.log
 combined.log
 shrinkwrap.yaml
 coverage
-server/src/database/config/config.json
