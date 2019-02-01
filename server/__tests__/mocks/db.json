@@ -4,5 +4,14 @@
     "password": "test@test",
     "firstName": "test",
     "lastName": "test"
+  },
+  "loginUser": {
+    "email": "manzi@email.com",
+    "password": "123456"
+  },
+  "post": {
+    "title": "Test Post",
+    "text": "Lorem lorem lorem lorem lorem",
+    "tags": ["Test"]
   }
 }

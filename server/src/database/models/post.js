@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       title: DataTypes.STRING,
       text: DataTypes.TEXT,
-      status: DataTypes.STRING,
+      status: {
+        type: DataTypes.STRING,
+        defaultValue: 'draft'
+      },
       tags: DataTypes.ARRAY(DataTypes.STRING),
       createdAt: {
         allowNull: false,

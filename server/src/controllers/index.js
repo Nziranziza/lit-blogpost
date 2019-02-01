@@ -1,4 +1,5 @@
-import auth from './auth';
-import users from './users';
+import authController from './auth';
+import userController from './users';
+import postController from './posts';
 
-export { auth, users };
+export { authController, postController, userController };

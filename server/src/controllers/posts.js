@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Post } from '../database/models';
 
 export default class PostController {
@@ -11,11 +12,15 @@ export default class PostController {
     }
 
     if (post.get().userId !== currentUser.id) {
-      return res.status(404).json({ status: 404, message: 'The post does not exist' });
+      return res.status(404).json({ status: 404, message: 'Unauthorized action' });
     }
 
-    await post.update({ status: 'deleted' });
+    if (post.get().status === 'deleted') {
+      return res.status(404).json({ status: 404, message: 'Post had already been deleted' });
+    }
 
-    return res.status(404).json({ status: 404, message: 'The post does not exist' });
+    await post.update({ status: 'deleted', updatedAt: moment().format() });
+
+    return res.status(404).json({ status: 404, message: 'The post was deleted successfully' });
   }
 }

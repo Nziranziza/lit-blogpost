@@ -24,7 +24,7 @@ export default class Auth {
       token = jwt.sign({ id: user.id, userType: user.userType }, JWT_SECRET);
       await user.createToken({ token }); // Insert a new token from user's model
     } catch (error) {
-      logger.log('Could not save the user', error);
+      logger.log('Could not save the user');
       return res.status(401).json({ status: 401, message: 'Please try again' });
     }
     const { password, ...userData } = user.get(); // Get user's data without the password
@@ -38,6 +38,7 @@ export default class Auth {
 
   static async login(req, res) {
     let user;
+    let token;
     const { body } = req;
     try {
       user = await User.findOne({ where: { email: body.email } });
@@ -50,13 +51,16 @@ export default class Auth {
       if (!password) {
         return res.status(401).json({ status: 401, message: "Email and password don't match" });
       }
+      token = jwt.sign({ id: user.id, userType: user.userType }, JWT_SECRET);
+      await user.createToken({ token }); // Insert a new token from user's model
     } catch (error) {
       return res.status(401).json({ status: 401, message: 'Please try again' });
     }
-    const { ...userData } = user.get();
+    const { password, ...userData } = user.get();
     return res.status(200).json({
       status: 200,
       message: 'User logged successfully',
+      token,
       data: userData
     });
   }

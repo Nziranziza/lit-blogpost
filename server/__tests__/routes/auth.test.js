@@ -4,17 +4,15 @@ import { user } from '../mocks/db.json';
 import { urlPrefix } from '../mocks/variables.json';
 import app from '../../src/server';
 
-console.log('Checking');
 describe('auth', () => {
-  beforeAll(() => {
-    console.log('before');
-    return User.destroy({
+  beforeAll(async () => {
+    await User.destroy({
       where: { email: user.email }
     }).then(() => true);
   });
 
-  afterAll(() => {
-    return User.destroy({
+  afterAll(async () => {
+    await User.destroy({
       where: { email: user.email }
     }).then(() => true);
   });
@@ -23,26 +21,29 @@ describe('auth', () => {
     const res = await request(app)
       .post(`${urlPrefix}/auth/signup`)
       .send({ ...user });
-    expect(res.statusCode).toBe(201);
+    expect(res.body).toBeDefined();
+    expect(res.status).toBe(201);
   });
 
   test('login- pass', async () => {
     const res = await request(app)
       .post(`${urlPrefix}/auth/login`)
       .send({ email: 'test@email.com', password: 'test@test' });
-    expect(res.statusCode).toBe(200);
+    expect(res.status).toBe(200);
   });
+
   test('login- user not found', async () => {
     const res = await request(app)
       .post(`${urlPrefix}/auth/login`)
       .send({ email: 'fake@email.com', password: 'test@test' });
-    expect(res.statusCode).toBe(404);
+    expect(res.status).toBe(404);
   });
 
-  test('login-wrong password', async () => {
+  test('login- wrong password', async () => {
+    expect.assertions(1);
     const res = await request(app)
       .post(`${urlPrefix}/auth/login`)
       .send({ email: 'test@email.com', password: 'fake@fake' });
-    expect(res.statusCode).toBe(401);
+    expect(res.status).toBe(401);
   });
 });

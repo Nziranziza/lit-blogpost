@@ -1,4 +1,4 @@
-const users = require('../mocks/users.json');
+const users = require('../mocks/users');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {

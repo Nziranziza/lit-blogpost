@@ -1,6 +1,6 @@
 import express from 'express';
 import { celebrate } from 'celebrate';
-import { auth } from '../controllers';
+import { authController } from '../controllers';
 import { authValidator } from './validators';
 
 const router = express.Router();
@@ -10,14 +10,15 @@ router.post(
   celebrate({
     body: authValidator.signup
   }),
-  auth.signup
+  authController.signup
 );
+
 router.post(
   '/login',
   celebrate({
     body: authValidator.login
   }),
-  auth.login
+  authController.login
 );
 
 export default router;
