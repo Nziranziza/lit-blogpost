@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "10.15.1"
+  },
   "scripts": {
     "build": "babel ./server/src --out-dir ./server/dist",
-    "start": "npm run build && node ./server/dist/index.js",
+    "start": "npm run db:migrate:fresh && npm run dev",
     "dev": "nodemon --exec babel-node ./server/src/index.js",
     "test": "jest --runInBand --detectOpenHandles --forceExit",
     "coveralls": "jest --runInBand --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
