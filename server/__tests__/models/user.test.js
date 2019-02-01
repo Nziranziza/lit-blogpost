@@ -2,41 +2,36 @@ import { User } from '../../src/database/models';
 import { user } from '../mocks/db.json';
 
 describe('User model', () => {
-  beforeAll(() => {
-    return User.destroy({
+  beforeAll(async () => {
+    await User.destroy({
       where: { email: user.email }
     });
   });
 
-  test('Create a user', () => {
+  test('Create a user', async () => {
     expect.assertions(1);
-    return User.create({ ...user }).then(res => {
-      expect(res.get()).toHaveProperty('email', user.email);
-    });
+    const res = await User.create({ ...user });
+    expect(res.get()).toHaveProperty('email', user.email);
   });
 
-  test('Find a user', () => {
+  test('Find a user', async () => {
     expect.assertions(1);
-    return User.findOne({ where: { email: user.email } }).then(res => {
-      expect(res.get()).toHaveProperty('email', user.email);
-    });
+    const res = await User.findOne({ where: { email: user.email } });
+    expect(res.get()).toHaveProperty('email', user.email);
   });
 
-  test('Update a user', () => {
+  test('Update a user', async () => {
     expect.assertions(1);
-    return User.update(
+    const [, userData] = await User.update(
       { firstName: 'Olivier' },
       { where: { email: user.email }, returning: true, plain: true }
-    ).then(res => {
-      const [, userData] = res;
-      expect(userData.firstName).toBe('Olivier');
-    });
+    );
+    expect(userData.firstName).toBe('Olivier');
   });
 
-  test('Delete a user', () => {
+  test('Delete a user', async () => {
     expect.assertions(1);
-    return User.destroy({ where: { email: user.email } }).then(res => {
-      expect(res).toBe(1);
-    });
+    const res = await await User.destroy({ where: { email: user.email } });
+    expect(res).toBe(1);
   });
 });
