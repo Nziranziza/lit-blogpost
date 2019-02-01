@@ -40,6 +40,16 @@ describe('posts', () => {
     expect(res.body).toBeDefined();
   });
 
+  test('publishPost', async () => {
+    expect.assertions(2);
+    const res = await request(app)
+      .put(`${urlPrefix}/posts/${testPost.id}/publish`)
+      .set('Authorization', `Bearer ${testUserToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toBeDefined();
+  });
+
   test('deletePost', async () => {
     expect.assertions(2);
     const res = await request(app)

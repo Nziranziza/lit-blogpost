@@ -49,4 +49,29 @@ export default class PostController {
 
     return res.status(200).json({ status: 200, message: 'The post was deleted successfully' });
   }
+
+  static async publishPost(req, res) {
+    const { currentUser = {} } = req.body;
+    const { postId } = req.params;
+    const post = await Post.findOne({
+      include: [{ model: User, attributes: { exclude: ['password'] } }],
+      where: { id: postId },
+      status: { [Op.not]: 'deleted' }
+    });
+
+    if (!post) {
+      return res.status(404).json({ status: 404, message: 'The post does not exist' });
+    }
+
+    // Checks if the user is not admin and if the post is a draft or unpublished post from another user
+    if (post.get().userId !== currentUser.id) {
+      return res.status(404).json({ status: 404, message: 'Unauthorized access' });
+    }
+
+    const status = post.get().status === 'published' ? 'unpublished' : 'published';
+
+    await post.update({ status, updatedAt: moment().format() });
+
+    return res.status(200).json({ status: 200, message: `The post was ${status} successfully` });
+  }
 }

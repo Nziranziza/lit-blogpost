@@ -8,7 +8,7 @@
     "start": "npm run build && node ./server/dist/index.js",
     "dev": "nodemon --exec babel-node ./server/src/index.js",
     "test": "jest --runInBand --detectOpenHandles --forceExit",
-    "coveralls": "jest --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
+    "coveralls": "jest --runInBand --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:migrate:fresh": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate",
     "db:migrate:seed": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
