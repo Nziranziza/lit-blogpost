@@ -10,7 +10,7 @@ env:
     - DATABASE_URL=postgresql://lit_blog:lit_blog@localhost/lit_blog
 language: node_js
 node_js:
-  - '11.6.0'
+  - '10.15.1'
 cache:
   directories:
     - node_modules

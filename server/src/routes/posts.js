@@ -4,6 +4,7 @@ import { postController } from '../controllers';
 
 const router = express.Router();
 
+router.get('/:postId', verifyToken({ openAccess: true }), postController.viewPost);
 router.delete('/:postId', verifyToken(), postController.deletePost);
 
 export default router;
