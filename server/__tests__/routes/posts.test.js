@@ -30,14 +30,23 @@ describe('posts', () => {
     });
   });
 
-  test('viewUserPosts', async () => {
-    expect.assertions(3);
+  test('viewPost', async () => {
+    expect.assertions(2);
     const res = await request(app)
-      .get(`${urlPrefix}/users/${testUser.id}/posts`)
+      .get(`${urlPrefix}/posts/${testPost.id}`)
       .set('Authorization', `Bearer ${testUserToken}`);
 
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
-    expect(res.body.data).toBeDefined();
+  });
+
+  test('deletePost', async () => {
+    expect.assertions(2);
+    const res = await request(app)
+      .delete(`${urlPrefix}/posts/${testPost.id}`)
+      .set('Authorization', `Bearer ${testUserToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toBeDefined();
   });
 });

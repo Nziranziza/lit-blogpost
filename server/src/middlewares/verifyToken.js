@@ -4,13 +4,16 @@ import { User, Token } from '../database/models';
 
 const { JWT_SECRET } = process.env;
 
-const verifyToken = (userType = []) => async (req, res, next) => {
+const verifyToken = ({ userType = [], openAccess = false } = {}) => async (req, res, next) => {
   let user;
   if (!req.headers) {
     return res.status(401).json({ status: 401, message: 'Unauthorized access' });
   }
   const { authorization = false } = req.headers;
   if (!authorization) {
+    if (openAccess) {
+      return next();
+    }
     return res.status(401).json({ status: 401, message: 'Unauthorized access' });
   }
   const token = authorization.slice(7);
@@ -18,7 +21,7 @@ const verifyToken = (userType = []) => async (req, res, next) => {
   // Checks if the token exist in the database
   const foundToken = await Token.findOne({ where: { token }, attributes: ['token'] });
   if (!foundToken) {
-    return res.status(401).json({ status: 401, message: 'Please login', token });
+    return res.status(401).json({ status: 401, message: 'Please login' });
   }
 
   // Verify and decode the token
