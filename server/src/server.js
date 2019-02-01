@@ -16,6 +16,7 @@ app.use(cors());
 
 app.use(`${routePrefix}/auth`, routes.auth);
 app.use(`${routePrefix}/users`, routes.users);
+app.use(`${routePrefix}/posts`, routes.posts);
 
 // Apply Celebrate middleware to handle joi errors
 app.use(joiErrors());

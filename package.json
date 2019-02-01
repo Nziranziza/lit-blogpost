@@ -7,10 +7,11 @@
     "build": "babel ./server/src --out-dir ./server/dist",
     "start": "npm run build && node ./server/dist/index.js",
     "dev": "nodemon --exec babel-node ./server/src/index.js",
-    "test": "jest --detectOpenHandles --forceExit",
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
     "coveralls": "jest --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
-    "db:migrate:fresh": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:migrate",
+    "db:migrate:fresh": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate",
+    "db:migrate:seed": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
     "db:seed": "node_modules/.bin/sequelize db:seed:all"
   },
   "repository": {
@@ -47,7 +48,6 @@
     "babel-jest": "24.0.0",
     "babel-plugin-root-import": "^6.1.0",
     "babel-preset-airbnb": "^3.2.0",
-    "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",

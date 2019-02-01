@@ -6,10 +6,10 @@
 
 ## Get Started
 
-Clone the repo: `git clone https://github.com/oesukam/lit-blogpost.git`
-Set up dev environment: `duplicate .env.example`
-Install packages:`npm install`
-Run the development server: `npm run dev`
+- Clone the repo: `git clone https://github.com/oesukam/lit-blogpost.git`
+- Set up dev environment: `duplicate .env.example`
+- Install packages:`npm install`
+- Run the development server: `npm run dev`
 
 ## Sequelize Commands
 
