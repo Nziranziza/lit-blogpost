@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { Op } from 'sequelize';
-import { Post, User } from '../database/models';
+import { Post, User, Comment } from '../database/models';
 
 export default class PostController {
   static async viewPost(req, res) {

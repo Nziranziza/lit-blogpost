@@ -8,7 +8,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       userId: Sequelize.UUID,
-      PostId: Sequelize.UUID,
+      postId: Sequelize.UUID,
       text: Sequelize.TEXT,
       status: Sequelize.STRING,
       createdAt: {

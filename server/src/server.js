@@ -17,6 +17,7 @@ app.use(cors());
 app.use(`${routePrefix}/auth`, routes.auth);
 app.use(`${routePrefix}/users`, routes.users);
 app.use(`${routePrefix}/posts`, routes.posts);
+app.use(`${routePrefix}/posts`, routes.comments);
 
 app.get('*', (req, res) => {
   res.send('<h1>Welcome to LIT Blog API</h1>');
