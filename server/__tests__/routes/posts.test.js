@@ -52,7 +52,7 @@ describe('posts', () => {
 
   test('commentPost', async () => {
     const res = await request(app)
-      .post(`${urlPrefix}/posts/${testPost.id}/comment`)
+      .post(`${urlPrefix}/posts/${testPost.id}/comments`)
       .set('Authorization', `Bearer ${testUserToken}`)
       .send({ text: 'comment test' });
 
@@ -61,7 +61,7 @@ describe('posts', () => {
 
   test('commentPost-not token', async () => {
     const res = await request(app)
-      .post(`${urlPrefix}/posts/${testPost.id}/comment`)
+      .post(`${urlPrefix}/posts/${testPost.id}/comments`)
       .send({ text: 'comment test' });
 
     expect(res.status).toBe(401);
@@ -79,7 +79,7 @@ describe('posts', () => {
 
   test('commentPost- after delete', async () => {
     const res = await request(app)
-      .post(`${urlPrefix}/posts/${testPost.id}/comment`)
+      .post(`${urlPrefix}/posts/${testPost.id}/comments`)
       .set('Authorization', `Bearer ${testUserToken}`)
       .send({ text: 'comment test' });
 

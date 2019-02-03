@@ -1,4 +1,4 @@
 import authValidator from './auth';
-import commentValidator from './comment';
+import postValidator from './posts';
 
-export { authValidator, commentValidator };
+export { authValidator, postValidator };
