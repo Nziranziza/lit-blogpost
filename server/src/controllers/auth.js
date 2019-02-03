@@ -7,6 +7,9 @@ import { logger } from '../helpers';
 const { JWT_SECRET } = process.env;
 
 export default class Auth {
+  /**
+   * @author Olivier
+   */
   static async signup(req, res) {
     let user;
     let token;
@@ -36,6 +39,9 @@ export default class Auth {
     });
   }
 
+  /**
+   * @author Caleb
+   */
   static async login(req, res) {
     let user;
     let token;

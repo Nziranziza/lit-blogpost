@@ -6,3 +6,7 @@ error.log
 combined.log
 shrinkwrap.yaml
 coverage
+server/src/database/config/config.jsonyarn 
+yarn.lock
+yarn-error.log
+out/

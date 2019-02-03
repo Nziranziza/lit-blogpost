@@ -11,12 +11,6 @@ A Mini Project to demonstrate gitflow, restfull design, agile methodology and te
 
 - Clone the repo: `git clone https://github.com/oesukam/lit-blogpost.git`
 - Set up dev environment: `duplicate .env.example`
-  ```
-    PORT=3000
-    JWT_SECRET=
-    DATABASE_URL=postgresql://username:password@localhost:5432/database
-    API_VERSION=v1
-  ```
 - Create a postgress database rhen setup credentials in .env file
 - Install packages:`npm install`
 - Run the migration: `npm run db:migrate:seed`
@@ -35,16 +29,17 @@ A Mini Project to demonstrate gitflow, restfull design, agile methodology and te
 
 ## Endpoints
 
-| Endpoint                          | Methods | Functionalities          |
-| --------------------------------- | ------- | ------------------------ |
-| /api/v1/auth/login                | POST    | Login registered user    |
-| /api/v1/auth/signup               | POST    | Register a new User      |
-| /api/v1/users/`<userId>`/posts    | GET     | Retrieve user's posts    |
-| /api/v1/posts/`<postId>`          | GET     | Retrieve a single post   |
-| /api/v1/posts/`<postId>`/publish  | PUT     | Publish a post           |
-| /api/v1/posts/`<postId>`/comments | POST    | Comment a post           |
-| /api/v1/posts/`<postId>`/         | PUT     | Update a single post     |
-| /api/v1/comments/`<postId>/`post  | GET     | Retrieve post's comments |
+_Token format_: `Bearer <Token>`
+
+| Endpoint                          | Methods | Token  | Functionalities        |
+| --------------------------------- | ------- | ------ | ---------------------- |
+| /api/v1/auth/login                | POST    | No     | Login registered user  |
+| /api/v1/auth/signup               | POST    | No     | Register a new User    |
+| /api/v1/users/`<userId>`/posts    | GET     | Yes    | Retrieve user's posts  |
+| /api/v1/posts/`<postId>`          | GET     | Yes/No | Retrieve a single post |
+| /api/v1/posts/`<postId>`          | PUT     | Yes    | Update a single post   |
+| /api/v1/posts/`<postId>`/publish  | PUT     | Yes    | Publish a post         |
+| /api/v1/posts/`<postId>`/comments | POST    | Yes    | Comment a post         |
 
 ## Authors
 

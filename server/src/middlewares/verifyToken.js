@@ -4,6 +4,12 @@ import { User, Token } from '../database/models';
 
 const { JWT_SECRET } = process.env;
 
+/**
+ * @author Olivier
+ * @param {Object} obj - verifyToken params
+ * @param {Object} obj.userType - An array of authorized user types
+ * @param {Object} obj.openAccess - Allows a route be access with and without token
+ */
 const verifyToken = ({ userType = [], openAccess = false } = {}) => async (req, res, next) => {
   let user;
   if (!req.headers) {
