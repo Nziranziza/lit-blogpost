@@ -5,4 +5,11 @@ package-lock.json
 error.log
 combined.log
 shrinkwrap.yaml
+<<<<<<< Updated upstream
 coverage
+=======
+coverage
+server/src/database/config/config.jsonyarn 
+yarn.lock
+yarn-error.log
+>>>>>>> Stashed changes

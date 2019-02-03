@@ -3,6 +3,22 @@ import { Op } from 'sequelize';
 import { Post, User } from '../database/models';
 
 export default class PostController {
+  static async createPost(req, res) {
+    const { title, text, tags = [], currentUser } = req.body;
+    const post = await Post.create({
+      userId: currentUser.id,
+      title,
+      text,
+      tags
+    });
+    if (post) {
+      return res.status(201).json({ message: 'Blog post was created' });
+    }
+    if (!post) {
+      return res.status(401).json({ message: 'Blog post was not created' });
+    }
+  }
+
   static async viewPost(req, res) {
     const { currentUser = {} } = req.body;
     const { postId } = req.params;
