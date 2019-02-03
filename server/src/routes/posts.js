@@ -17,5 +17,6 @@ router.post(
   verifyToken(),
   postController.commentPost
 );
+router.put('/:postId', verifyToken(), postController.editPost);
 
 export default router;

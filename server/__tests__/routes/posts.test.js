@@ -85,4 +85,14 @@ describe('posts', () => {
 
     expect(res.status).toBe(404);
   });
+
+  test('editPost', async () => {
+    expect.assertions(2);
+    const res = await request(app)
+      .put(`${urlPrefix}/posts/${testPost.id}`)
+      .set('Authorization', `Bearer ${testUserToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toBeDefined();
+  });
 });
