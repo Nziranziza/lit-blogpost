@@ -63,7 +63,7 @@ describe('posts', () => {
   test('editPost', async () => {
     expect.assertions(2);
     const res = await request(app)
-      .put(`${urlPrefix}/posts/${testPost.id}/edit`)
+      .put(`${urlPrefix}/posts/${testPost.id}`)
       .set('Authorization', `Bearer ${testUserToken}`);
 
     expect(res.status).toBe(200);

@@ -7,6 +7,6 @@ const router = express.Router();
 router.get('/:postId', verifyToken({ openAccess: true }), postController.viewPost);
 router.delete('/:postId', verifyToken(), postController.deletePost);
 router.put('/:postId/publish', verifyToken(), postController.publishPost);
-router.put('/:postId/edit', verifyToken(), postController.editPost);
+router.put('/:postId', verifyToken(), postController.editPost);
 
 export default router;
