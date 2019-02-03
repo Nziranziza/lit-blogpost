@@ -18,5 +18,11 @@ router.post(
   postController.commentPost
 );
 router.put('/:postId', verifyToken(), postController.editPost);
+router.post(
+  '/',
+  celebrate({ body: postValidator.createPost }),
+  verifyToken(),
+  postController.createPost
+);
 
 export default router;

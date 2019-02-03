@@ -4,6 +4,25 @@ import { Post, User, Comment } from '../database/models';
 
 export default class PostController {
   /**
+   * @author Manzi
+   */
+  static async createPost(req, res) {
+    const { title, text, tags = [], currentUser } = req.body;
+    const post = await Post.create({
+      userId: currentUser.id,
+      title,
+      text,
+      tags
+    });
+    if (post) {
+      return res.status(201).json({ message: 'Blog post was created' });
+    }
+    if (!post) {
+      return res.status(401).json({ message: 'Blog post was not created' });
+    }
+  }
+
+  /**
    * @author Olivier
    * @author Chris
    * */

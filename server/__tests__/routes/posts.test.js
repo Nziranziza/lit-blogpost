@@ -96,4 +96,15 @@ describe('posts', () => {
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
   });
+
+  test('postBlogpost', async () => {
+    expect.assertions(2);
+    const res = await request(app)
+      .post(`${urlPrefix}/posts`)
+      .set('Authorization', `Bearer ${testUserToken}`)
+      .send(post);
+
+    expect(res.status).toBe(201);
+    expect(res.body).toBeDefined();
+  });
 });
