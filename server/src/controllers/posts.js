@@ -74,4 +74,36 @@ export default class PostController {
 
     return res.status(200).json({ status: 200, message: `The post was ${status} successfully` });
   }
+
+  // Method to update a blog post: this updates the title and text of the post
+  // Author: Chris
+  static async editPost(req, res) {
+    const { postId } = req.params;
+    const { currentUser, title, text } = req.body;
+
+    const post = await Post.findOne({
+      include: [
+        {
+          model: User,
+          attributes: { exclude: ['password'] }
+        }
+      ],
+      where: {
+        id: postId
+      },
+      status: { [Op.not]: 'deleted' }
+    });
+
+    if (!post) {
+      return res.status(404).send({ message: 'The post does not exist' });
+    }
+
+    if (post.get().userId !== currentUser.id) {
+      return res.status(403).send({ message: 'Unauthorized access' });
+    }
+
+    await post.update({ title, text, updatedAt: moment().format() });
+
+    return res.status(200).send({ message: 'The post was updated successfully' });
+  }
 }
