@@ -3,6 +3,10 @@ import { Op } from 'sequelize';
 import { Post, User, Comment } from '../database/models';
 
 export default class PostController {
+  /**
+   * @author Olivier
+   * @author Chris
+   * */
   static async viewPost(req, res) {
     const { currentUser = {} } = req.body;
     const { postId } = req.params;
@@ -28,10 +32,13 @@ export default class PostController {
     return res.status(200).json({ status: 200, data: post.get() });
   }
 
+  /**
+   * @author Caleb
+   * */
   static async commentPost(req, res) {
     const { body } = req;
     const { currentUser } = req.body;
-    let user = currentUser.id;
+    const user = currentUser.id;
     const { postId } = req.params;
     let postComment;
     try {
@@ -42,7 +49,7 @@ export default class PostController {
       }
       postComment = await Comment.create({
         userId: user,
-        postId: postId,
+        postId,
         ...body,
         status: 'active'
       });
@@ -52,6 +59,9 @@ export default class PostController {
     }
   }
 
+  /**
+   * @author Olivier
+   * */
   static async deletePost(req, res) {
     const { currentUser } = req.body;
     const { postId } = req.params;
@@ -74,6 +84,9 @@ export default class PostController {
     return res.status(200).json({ status: 200, message: 'The post was deleted successfully' });
   }
 
+  /**
+   * @author Olivier
+   * */
   static async publishPost(req, res) {
     const { currentUser = {} } = req.body;
     const { postId } = req.params;
@@ -99,8 +112,10 @@ export default class PostController {
     return res.status(200).json({ status: 200, message: `The post was ${status} successfully` });
   }
 
-  // Method to update a blog post: this updates the title and text of the post
-  // Author: Chris
+  /**
+   * @author Chris
+   * @decription Method to update a blog post: this updates the title and text of the post
+   * */
   static async editPost(req, res) {
     const { postId } = req.params;
     const { currentUser, title, text } = req.body;

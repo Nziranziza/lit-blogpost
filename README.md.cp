@@ -11,12 +11,6 @@ A Mini Project to demonstrate gitflow, restfull design, agile methodology and te
 
 - Clone the repo: `git clone https://github.com/oesukam/lit-blogpost.git`
 - Set up dev environment: `duplicate .env.example`
-  ```
-    PORT=3000
-    JWT_SECRET=
-    DATABASE_URL=postgresql://username:password@localhost:5432/database
-    API_VERSION=v1
-  ```
 - Create a postgress database rhen setup credentials in .env file
 - Install packages:`npm install`
 - Run the migration: `npm run db:migrate:seed`
