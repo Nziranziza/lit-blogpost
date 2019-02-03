@@ -63,7 +63,7 @@ describe('posts', () => {
 
   test('viewComment', async () => {
     const res = await request(app)
-      .get(`${urlPrefix}/comments/${testPost.id}/post`)
+      .get(`${urlPrefix}/posts/${testPost.id}/comments`)
       .set('Authorization', `Bearer ${testUserToken}`);
     expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
@@ -97,7 +97,7 @@ describe('posts', () => {
 
   test('viewComment- after post delete', async () => {
     const res = await request(app)
-      .get(`${urlPrefix}/comments/${testPost.id}/post`)
+      .get(`${urlPrefix}/posts/${testPost.id}/comments`)
       .set('Authorization', `Bearer ${testUserToken}`);
     expect(res.status).toBe(404);
     expect(res.body).toBeDefined();

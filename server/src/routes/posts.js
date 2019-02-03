@@ -24,5 +24,6 @@ router.post(
   verifyToken(),
   postController.createPost
 );
+router.get('/:postId/comments', verifyToken(), postController.viewComment);
 
 export default router;
