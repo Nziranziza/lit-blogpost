@@ -35,17 +35,17 @@ A Mini Project to demonstrate gitflow, restfull design, agile methodology and te
 
 ## Endpoints
 
-_Token format_: `Bearer <Token>`
-
-| Endpoint                          | Methods | Token  | Functionalities        |
-| --------------------------------- | ------- | ------ | ---------------------- |
-| /api/v1/auth/login                | POST    | No     | Login registered user  |
-| /api/v1/auth/signup               | POST    | No     | Register a new User    |
-| /api/v1/users/`<userId>`/posts    | GET     | Yes    | Retrieve user's posts  |
-| /api/v1/posts/`<postId>`          | GET     | Yes/No | Retrieve a single post |
-| /api/v1/posts/`<postId>`          | PUT     | Yes    | Update a single post   |
-| /api/v1/posts/`<postId>`/publish  | PUT     | Yes    | Publish a post         |
-| /api/v1/posts/`<postId>`/comments | POST    | Yes    | Comment a post         |
+| Endpoint                          | Methods | Token  | Functionalities          |
+| --------------------------------- | ------- | ------ | ------------------------ |
+| /api/v1/auth/login                | POST    | No     | Login registered user    |
+| /api/v1/auth/signup               | POST    | No     | Register a new User      |
+| /api/v1/users/`<userId>`/posts    | GET     | Yes    | Retrieve user's posts    |
+| /api/v1/posts/`<postId>`          | GET     | Yes/No | Retrieve a single post   |
+| /api/v1/posts/`<postId>`          | PUT     | Yes    | Update a single post     |
+| /api/v1/posts/`<postId>`/publish  | PUT     | Yes    | Publish a post           |
+| /api/v1/posts/`<postId>`/comments | POST    | Yes    | Comment a post           |
+| /api/v1/posts/`<postId>`/         | PUT     | YES    | pdate a single post      |
+| /api/v1/posts/`<postId>/`comments | GET     | YES    | Retrieve post's comments |
 
 ## Authors
 
