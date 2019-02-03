@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { Op } from 'sequelize';
-import { Post, User } from '../database/models';
+import { Post, User, Comment } from '../database/models';
 
 export default class PostController {
   static async viewPost(req, res) {
@@ -26,6 +26,30 @@ export default class PostController {
     }
 
     return res.status(200).json({ status: 200, data: post.get() });
+  }
+
+  static async commentPost(req, res) {
+    const { body } = req;
+    const { currentUser } = req.body;
+    let user = currentUser.id;
+    const { postId } = req.params;
+    let postComment;
+    try {
+      const post = await Post.findOne({ where: { id: postId, status: 'published' } });
+
+      if (!post) {
+        return res.status(404).json({ status: 404, message: 'The post does not exist' });
+      }
+      postComment = await Comment.create({
+        userId: user,
+        postId: postId,
+        ...body,
+        status: 'active'
+      });
+      return res.status(201).json({ message: 'Comment added', Comment: postComment.get() });
+    } catch (err) {
+      return res.status(400).json({ message: 'try again' });
+    }
   }
 
   static async deletePost(req, res) {
