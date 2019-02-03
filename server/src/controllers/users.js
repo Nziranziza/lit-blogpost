@@ -3,8 +3,10 @@ import { Post } from '../database/models';
 import logger from '../helpers/logger';
 
 class UserController {
-  // Method to view all posts it takes request parameter of user id.
-  // Author Chris
+  /**
+   * @author Chris
+   * @description Method to view all posts it takes request parameter of user id.
+   */
   static async viewUserPosts(req, res) {
     const { userId } = req.params;
     const { currentUser } = req.body;
@@ -26,4 +28,5 @@ class UserController {
     }
   }
 }
+
 export default UserController;

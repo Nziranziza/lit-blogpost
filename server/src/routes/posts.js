@@ -1,6 +1,6 @@
 import express from 'express';
-import verifyToken from '../middlewares/verifyToken';
 import { celebrate } from 'celebrate';
+import verifyToken from '../middlewares/verifyToken';
 import { postController } from '../controllers';
 import { postValidator } from './validators';
 

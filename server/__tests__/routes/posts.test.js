@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { urlPrefix } from '../mocks/variables.json';
-import { User, Post } from '../../src/database/models';
+import { User, Post, Token } from '../../src/database/models';
 import { user, post } from '../mocks/db.json';
 import app from '../../src/server';
 
@@ -24,6 +24,9 @@ describe('posts', () => {
   afterAll(async () => {
     await User.destroy({
       where: { email: user.email }
+    });
+    await Token.destroy({
+      where: { token: testUserToken }
     });
     await Post.destroy({
       where: { userId: testUser.id }
@@ -55,7 +58,6 @@ describe('posts', () => {
       .post(`${urlPrefix}/posts/${testPost.id}/comments`)
       .set('Authorization', `Bearer ${testUserToken}`)
       .send({ text: 'comment test' });
-
     expect(res.status).toBe(201);
   });
 
@@ -82,7 +84,6 @@ describe('posts', () => {
       .post(`${urlPrefix}/posts/${testPost.id}/comments`)
       .set('Authorization', `Bearer ${testUserToken}`)
       .send({ text: 'comment test' });
-
     expect(res.status).toBe(404);
   });
 
