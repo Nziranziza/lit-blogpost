@@ -15,13 +15,15 @@
 
 ## Endpoints
 
-| Endpoint                       | Methods | Functionalities        |
-| ------------------------------ | ------- | ---------------------- |
-| /api/v1/auth/login             | POST    | Login registered user  |
-| /api/v1/auth/signup            | POST    | Register a new User    |
-| /api/v1/users/<userId>/posts   | GET     | Retrieve user's posts  |
-| /api/v1/posts/<postId>         | GET     | Retrieve a single post |
-| /api/v1/posts/<postId>/publish | PUT     | Publish a post         |
+| Endpoint                       | Methods | Functionalities          |
+| ------------------------------ | ------- | ------------------------ |
+| /api/v1/auth/login             | POST    | Login registered user    |
+| /api/v1/auth/signup            | POST    | Register a new User      |
+| /api/v1/users/<userId>/posts   | GET     | Retrieve user's posts    |
+| /api/v1/posts/<postId>         | GET     | Retrieve a single post   |
+| /api/v1/posts/<postId>/publish | PUT     | Publish a post           |
+| /api/v1/posts/<postId>/        | PUT     | Update a single post     |
+| /api/v1/comments/<postId>/post | GET     | Retrieve post's comments |
 
 ## Sequelize Commands
 

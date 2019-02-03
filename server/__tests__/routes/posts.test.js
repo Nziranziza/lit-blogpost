@@ -59,6 +59,14 @@ describe('posts', () => {
     expect(res.status).toBe(201);
   });
 
+  test('viewComment', async () => {
+    const res = await request(app)
+      .get(`${urlPrefix}/comments/${testPost.id}/post`)
+      .set('Authorization', `Bearer ${testUserToken}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toBeDefined();
+  });
+
   test('commentPost-not token', async () => {
     const res = await request(app)
       .post(`${urlPrefix}/posts/${testPost.id}/comments`)
@@ -84,6 +92,14 @@ describe('posts', () => {
       .send({ text: 'comment test' });
 
     expect(res.status).toBe(404);
+  });
+
+  test('viewComment- after post delete', async () => {
+    const res = await request(app)
+      .get(`${urlPrefix}/comments/${testPost.id}/post`)
+      .set('Authorization', `Bearer ${testUserToken}`);
+    expect(res.status).toBe(404);
+    expect(res.body).toBeDefined();
   });
 
   test('editPost', async () => {
