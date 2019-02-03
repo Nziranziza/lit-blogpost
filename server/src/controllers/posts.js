@@ -1,8 +1,11 @@
 import moment from 'moment';
 import { Op } from 'sequelize';
-import { Post, User } from '../database/models';
+import { Post, User, Comment } from '../database/models';
 
 export default class PostController {
+  /**
+   * @author Manzi
+   */
   static async createPost(req, res) {
     const { title, text, tags = [], currentUser } = req.body;
     const post = await Post.create({
@@ -19,6 +22,10 @@ export default class PostController {
     }
   }
 
+  /**
+   * @author Olivier
+   * @author Chris
+   * */
   static async viewPost(req, res) {
     const { currentUser = {} } = req.body;
     const { postId } = req.params;
@@ -44,6 +51,36 @@ export default class PostController {
     return res.status(200).json({ status: 200, data: post.get() });
   }
 
+  /**
+   * @author Caleb
+   * */
+  static async commentPost(req, res) {
+    const { body } = req;
+    const { currentUser } = req.body;
+    const user = currentUser.id;
+    const { postId } = req.params;
+    let postComment;
+    try {
+      const post = await Post.findOne({ where: { id: postId, status: 'published' } });
+
+      if (!post) {
+        return res.status(404).json({ status: 404, message: 'The post does not exist' });
+      }
+      postComment = await Comment.create({
+        userId: user,
+        postId,
+        ...body,
+        status: 'active'
+      });
+      return res.status(201).json({ message: 'Comment added', Comment: postComment.get() });
+    } catch (err) {
+      return res.status(400).json({ message: 'try again' });
+    }
+  }
+
+  /**
+   * @author Olivier
+   * */
   static async deletePost(req, res) {
     const { currentUser } = req.body;
     const { postId } = req.params;
@@ -66,6 +103,9 @@ export default class PostController {
     return res.status(200).json({ status: 200, message: 'The post was deleted successfully' });
   }
 
+  /**
+   * @author Olivier
+   * */
   static async publishPost(req, res) {
     const { currentUser = {} } = req.body;
     const { postId } = req.params;
@@ -91,8 +131,10 @@ export default class PostController {
     return res.status(200).json({ status: 200, message: `The post was ${status} successfully` });
   }
 
-  // Method to update a blog post: this updates the title and text of the post
-  // Author: Chris
+  /**
+   * @author Chris
+   * @decription Method to update a blog post: this updates the title and text of the post
+   * */
   static async editPost(req, res) {
     const { postId } = req.params;
     const { currentUser, title, text } = req.body;

@@ -9,7 +9,20 @@ const router = express.Router();
 router.get('/:postId', verifyToken({ openAccess: true }), postController.viewPost);
 router.delete('/:postId', verifyToken(), postController.deletePost);
 router.put('/:postId/publish', verifyToken(), postController.publishPost);
+router.post(
+  '/:postId/comments',
+  celebrate({
+    body: postValidator.comment
+  }),
+  verifyToken(),
+  postController.commentPost
+);
 router.put('/:postId', verifyToken(), postController.editPost);
-router.post('/', celebrate({ body: postValidator }), verifyToken(), postController.createPost);
+router.post(
+  '/',
+  celebrate({ body: postValidator.createPost }),
+  verifyToken(),
+  postController.createPost
+);
 
 export default router;

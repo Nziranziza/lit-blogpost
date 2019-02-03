@@ -1,6 +1,6 @@
 import { Joi } from 'celebrate';
 
-const post = {
+const createPost = {
   title: Joi.string()
     .trim()
     .required(),
@@ -11,4 +11,10 @@ const post = {
   tags: Joi.array().items(Joi.string().trim())
 };
 
-export default post;
+const comment = {
+  text: Joi.string()
+    .required()
+    .min(2)
+};
+
+export default { comment, createPost };
