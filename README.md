@@ -43,6 +43,7 @@ A Mini Project to demonstrate gitflow, restfull design, agile methodology and te
 | /api/v1/posts/`<postId>`          | GET     | Yes/No | Retrieve a single post   |
 | /api/v1/posts/`<postId>`          | PUT     | Yes    | Update a single post     |
 | /api/v1/posts/`<postId>`/publish  | PUT     | Yes    | Publish a post           |
+| /api/v1/posts/`<postId>`/comments | GET     | Yes/No | Fetct post comments      |
 | /api/v1/posts/`<postId>`/comments | POST    | Yes    | Comment a post           |
 | /api/v1/posts/`<postId>`/         | PUT     | YES    | pdate a single post      |
 | /api/v1/posts/`<postId>/`comments | GET     | YES    | Retrieve post's comments |

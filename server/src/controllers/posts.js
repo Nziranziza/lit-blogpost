@@ -72,7 +72,9 @@ export default class PostController {
         ...body,
         status: 'active'
       });
-      return res.status(201).json({ message: 'Comment added', Comment: postComment.get() });
+      return res
+        .status(201)
+        .json({ status: 201, message: 'Comment created successfully', data: postComment.get() });
     } catch (err) {
       return res.status(400).json({ message: 'try again' });
     }
@@ -93,11 +95,11 @@ export default class PostController {
         return res.status(404).json({ status: 404, message: 'The post does not exist' });
       }
       const comment = await Comment.findAll({
-        include: [{ model: User, attributes: ['firstName'] }],
-        where: { postId: postId }
+        include: [{ model: User, attributes: ['id', 'avatar', 'firstName', 'lastName'] }],
+        where: { postId }
       });
 
-      return res.status(200).json({ status: 200, Post: post, comments: comment });
+      return res.status(200).json({ status: 200, data: comment });
     } catch (err) {
       console.log(err);
       return res.status(401).json({ status: 401, message: 'Please Try again' });
