@@ -1,11 +1,12 @@
 import request from 'supertest';
 import { urlPrefix } from '../mocks/variables.json';
 import { User, Post, Token, Comment } from '../../src/database/models';
-import { user, post, comment } from '../mocks/db.json';
+import { user, post, comment, user1 } from '../mocks/db.json';
 import app from '../../src/server';
 
 let testUser;
 let testUserToken;
+let testUser1Token;
 let testPost;
 let testComment;
 describe('posts', () => {
@@ -20,6 +21,17 @@ describe('posts', () => {
       userId: testUser.id
     });
     testPost = res.get();
+    const userOne = await request(app)
+      .post(`${urlPrefix}/auth/signup`)
+      .send({ ...user1 });
+    testUser1Token = userOne.body.token;
+    const resComment = await Comment.create({
+      ...comment,
+      userId: testUser.id,
+      postId: testPost.id,
+      status: 'active'
+    });
+    testComment = resComment.get();
   });
 
   afterAll(async () => {
@@ -30,6 +42,9 @@ describe('posts', () => {
       where: { token: testUserToken }
     });
     await Post.destroy({
+      where: { userId: testUser.id }
+    });
+    await Comment.destroy({
       where: { userId: testUser.id }
     });
   });
@@ -124,19 +139,28 @@ describe('posts', () => {
     expect(res.status).toBe(201);
     expect(res.body).toBeDefined();
   });
+  test('deleteComment --without ownership', async () => {
+    const res = await request(app)
+      .delete(`${urlPrefix}/posts/${testPost.id}/comments/${testComment.id}`)
+      .set('Authorization', `Bearer ${testUser1Token}`);
+
+    expect(res.status).toBe(403);
+    expect(res.body.message).toBe('Unauthorized access');
+  });
   test('deleteComment', async () => {
-    const resComment = await Comment.create({
-      ...comment,
-      userId: testUser.id,
-      postId: testPost.id,
-      status: 'active'
-    });
-    testComment = resComment.get();
     const res = await request(app)
       .delete(`${urlPrefix}/posts/${testPost.id}/comments/${testComment.id}`)
       .set('Authorization', `Bearer ${testUserToken}`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toBeDefined();
+    expect(res.body.message).toBe('The comment was deleted successfully');
+  });
+  test('deleteComment --when is deleted', async () => {
+    const res = await request(app)
+      .delete(`${urlPrefix}/posts/${testPost.id}/comments/${testComment.id}`)
+      .set('Authorization', `Bearer ${testUserToken}`);
+
+    expect(res.status).toBe(404);
+    expect(res.body.message).toBe('The comment does not exist');
   });
 });

@@ -5,6 +5,12 @@
     "firstName": "test",
     "lastName": "test"
   },
+  "user1": {
+    "email": "test1@email.com",
+    "password": "test1@test1",
+    "firstName": "test1",
+    "lastName": "test1"
+  },
   "loginUser": {
     "email": "manzi@email.com",
     "password": "123456"
