@@ -192,4 +192,36 @@ export default class PostController {
 
     return res.status(200).send({ message: 'The post was updated successfully' });
   }
+  /**
+   * @author Daniel
+   * @description method to delete a comment
+   * @param {object} req
+   * @param {object} res
+   */
+
+  static async deleteComment(req, res) {
+    const { id, postId } = req.params;
+    const { currentUser } = req.body;
+    try {
+      const comment = await Comment.findOne({
+        where: {
+          id,
+          postId,
+          status: { [Op.not]: 'deleted' }
+        }
+      });
+      if (!comment) {
+        return res.status(404).send({ message: 'The comment does not exist' });
+      }
+      if (comment.get().userId !== currentUser.id) {
+        return res.status(403).send({ message: 'Unauthorized access' });
+      }
+
+      await comment.update({ status: 'deleted', updatedAt: moment().format() });
+
+      return res.status(200).send({ status: 200, message: 'The comment was deleted successfully' });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  }
 }

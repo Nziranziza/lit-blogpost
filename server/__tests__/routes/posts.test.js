@@ -1,12 +1,13 @@
 import request from 'supertest';
 import { urlPrefix } from '../mocks/variables.json';
-import { User, Post, Token } from '../../src/database/models';
-import { user, post } from '../mocks/db.json';
+import { User, Post, Token, Comment } from '../../src/database/models';
+import { user, post, comment } from '../mocks/db.json';
 import app from '../../src/server';
 
 let testUser;
 let testUserToken;
 let testPost;
+let testComment;
 describe('posts', () => {
   beforeAll(async () => {
     const { body } = await request(app)
@@ -121,6 +122,21 @@ describe('posts', () => {
       .send(post);
 
     expect(res.status).toBe(201);
+    expect(res.body).toBeDefined();
+  });
+  test('deleteComment', async () => {
+    const resComment = await Comment.create({
+      ...comment,
+      userId: testUser.id,
+      postId: testPost.id,
+      status: 'active'
+    });
+    testComment = resComment.get();
+    const res = await request(app)
+      .delete(`${urlPrefix}/posts/${testPost.id}/comments/${testComment.id}`)
+      .set('Authorization', `Bearer ${testUserToken}`);
+
+    expect(res.status).toBe(200);
     expect(res.body).toBeDefined();
   });
 });

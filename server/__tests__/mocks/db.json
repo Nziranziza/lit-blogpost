@@ -13,5 +13,8 @@
     "title": "Test Post",
     "text": "Lorem lorem lorem lorem lorem Lore Lorem lorem lorem lorem loremm lorem lorem lorem lorem Lorem lorem lorem lorem lorem Lorem lorem lorem lorem lorem",
     "tags": ["Test"]
+  },
+  "comment": {
+    "text": "The magic pot"
   }
 }
