@@ -25,5 +25,6 @@ router.post(
   postController.createPost
 );
 router.get('/:postId/comments', verifyToken(), postController.viewComment);
+router.delete('/:postId/comments/:id', verifyToken(), postController.deleteComment);
 
 export default router;
