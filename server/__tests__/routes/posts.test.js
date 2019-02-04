@@ -47,6 +47,9 @@ describe('posts', () => {
     await Comment.destroy({
       where: { userId: testUser.id }
     });
+    await User.destroy({
+      where: { email: user1.email }
+    });
   });
 
   test('viewPost', async () => {
