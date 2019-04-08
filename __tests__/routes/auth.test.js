@@ -1,8 +1,8 @@
 import request from 'supertest';
-import { User } from '../../src/database/models';
+import { User } from '../../database/models';
 import { user } from '../mocks/db.json';
 import { urlPrefix } from '../mocks/variables.json';
-import app from '../../src/server';
+import app from '../../server';
 
 describe('auth', () => {
   beforeAll(async () => {

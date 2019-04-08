@@ -4,11 +4,14 @@ module.exports = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|js)x?$',
   coveragePathIgnorePatterns: [
     'node_modules',
-    'server/src/index.js',
-    'server/src/server.js',
-    'server/src/database',
-    'server/__tests__'
+    'coverage',
+    'index.js',
+    'server.js',
+    'database',
+    'middlewares',
+    '__tests__',
+    'jest.config.js'
   ],
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['server/src/**/*.js']
+  collectCoverageFrom: ['**/*.js']
 };

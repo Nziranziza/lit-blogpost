@@ -10,3 +10,4 @@ server/src/database/config/config.jsonyarn
 yarn.lock
 yarn-error.log
 out/
+pnpm-lock.yaml

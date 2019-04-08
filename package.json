@@ -10,7 +10,7 @@
     "build": "babel ./server/src --out-dir ./server/dist",
     "start": "npm run db:migrate:seed && npm run dev",
     "dev": "nodemon --exec babel-node ./server/src/index.js",
-    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test": "jest --coverage --runInBand --detectOpenHandles --forceExit",
     "coveralls": "jest --runInBand --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:migrate:fresh": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate",

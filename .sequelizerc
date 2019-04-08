@@ -1,12 +1,8 @@
 const path = require("path");
-require('dotenv').config();
-let src = "src";
-if (process.env.NODE_ENV === 'production') {
-    src = "dist";
-}
+
 module.exports = {
-  "config": path.resolve("server", src, "database", "config", "config.json"),
-  "models-path": path.resolve("server", src, "database",  "models"),
-  "seeders-path": path.resolve("server", src, "database",  "seeders"),
-  "migrations-path": path.resolve("server", src, "database",  "migrations")
+  "config": path.resolve("database", "config", "config.json"),
+  "models-path": path.resolve("database",  "models"),
+  "seeders-path": path.resolve("database",  "seeders"),
+  "migrations-path": path.resolve("database",  "migrations")
 }
