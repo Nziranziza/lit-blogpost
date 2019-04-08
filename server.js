@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import helmet from 'helmet';
+import morgan from 'morgan';
 import joiErrors from './middlewares/joiErrors';
 import * as routes from './routes';
 
@@ -13,6 +14,7 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(morgan('dev'));
 
 app.use(`${routePrefix}/auth`, routes.auth);
 app.use(`${routePrefix}/users`, routes.users);

@@ -34,25 +34,20 @@ export default class Auth {
    * @author Caleb
    */
   static async login(req, res) {
-    let user;
-    let token;
     const { body } = req;
-    try {
-      user = await User.findOne({ where: { email: body.email } });
 
-      if (!user) {
-        return res.status(404).json({ status: 404, message: 'User not found' });
-      }
-      const password = await bcrypt.compare(body.password, user.get().password);
+    const user = await User.findOne({ where: { email: body.email } });
 
-      if (!password) {
-        return res.status(401).json({ status: 401, message: "Email and password don't match" });
-      }
-      token = jwt.sign({ id: user.id, userType: user.userType }, JWT_SECRET);
-      await user.createToken({ token }); // Insert a new token from user's model
-    } catch (error) {
-      return res.status(401).json({ status: 401, message: 'Please try again' });
+    if (!user) {
+      return res.status(404).json({ status: 404, message: 'User not found' });
     }
+    const hashedPassword = await bcrypt.compare(body.password, user.get().password);
+
+    if (!hashedPassword) {
+      return res.status(401).json({ status: 401, message: "Email and password don't match" });
+    }
+    const token = jwt.sign({ id: user.id, userType: user.userType }, JWT_SECRET);
+    await user.createToken({ token }); // Insert a new token from user's model
     const { password, ...userData } = user.get();
     return res.status(200).json({
       status: 200,
