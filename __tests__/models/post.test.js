@@ -1,4 +1,4 @@
-import { User, Post } from '../../src/database/models';
+import { User, Post } from '../../database/models';
 import { user, post } from '../mocks/db.json';
 
 let testUser;

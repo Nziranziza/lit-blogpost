@@ -7,19 +7,14 @@ export default class PostController {
    * @author Manzi
    */
   static async createPost(req, res) {
-    const { title, text, tags = [], currentUser } = req.body;
+    const { title, text, tags, currentUser } = req.body;
     const post = await Post.create({
       userId: currentUser.id,
       title,
       text,
       tags
     });
-    if (post) {
-      return res.status(201).json({ message: 'Blog post was created' });
-    }
-    if (!post) {
-      return res.status(401).json({ message: 'Blog post was not created' });
-    }
+    return res.status(201).json({ message: 'Blog post was created', post: post.get() });
   }
 
   /**
@@ -27,7 +22,7 @@ export default class PostController {
    * @author Chris
    * */
   static async viewPost(req, res) {
-    const { currentUser = {} } = req.body;
+    const { currentUser } = req.body;
     const { postId } = req.params;
     const protectedStatus = ['draft', 'unpublished'];
     const post = await Post.findOne({
@@ -41,11 +36,12 @@ export default class PostController {
 
     // Checks if the user is not admin and if the post is a draft or unpublished post from another user
     if (
+      currentUser &&
       post.get().userId !== currentUser.id &&
       currentUser.userType !== 'admin' &&
       protectedStatus.indexOf(post.get().status) > -1
     ) {
-      return res.status(404).json({ status: 404, message: 'Unauthorized access' });
+      return res.status(401).json({ status: 401, message: 'Unauthorized access' });
     }
 
     return res.status(200).json({ status: 200, data: post.get() });
@@ -60,24 +56,20 @@ export default class PostController {
     const user = currentUser.id;
     const { postId } = req.params;
     let postComment;
-    try {
-      const post = await Post.findOne({ where: { id: postId, status: 'published' } });
+    const post = await Post.findOne({ where: { id: postId, status: 'published' } });
 
-      if (!post) {
-        return res.status(404).json({ status: 404, message: 'The post does not exist' });
-      }
-      postComment = await Comment.create({
-        userId: user,
-        postId,
-        ...body,
-        status: 'active'
-      });
-      return res
-        .status(201)
-        .json({ status: 201, message: 'Comment created successfully', data: postComment.get() });
-    } catch (err) {
-      return res.status(400).json({ message: 'try again' });
+    if (!post) {
+      return res.status(404).json({ status: 404, message: 'The post does not exist' });
     }
+    postComment = await Comment.create({
+      userId: user,
+      postId,
+      ...body,
+      status: 'active'
+    });
+    return res
+      .status(201)
+      .json({ status: 201, message: 'Comment created successfully', data: postComment.get() });
   }
 
   /**
@@ -85,25 +77,20 @@ export default class PostController {
    * */
   static async viewComment(req, res) {
     const { postId } = req.params;
-    try {
-      const post = await Post.findOne({
-        attributes: ['title'],
-        where: { id: postId, status: 'published' }
-      });
+    const post = await Post.findOne({
+      attributes: ['title'],
+      where: { id: postId, status: 'published' }
+    });
 
-      if (!post) {
-        return res.status(404).json({ status: 404, message: 'The post does not exist' });
-      }
-      const comment = await Comment.findAll({
-        include: [{ model: User, attributes: ['id', 'avatar', 'firstName', 'lastName'] }],
-        where: { postId }
-      });
-
-      return res.status(200).json({ status: 200, data: comment });
-    } catch (err) {
-      console.log(err);
-      return res.status(401).json({ status: 401, message: 'Please Try again' });
+    if (!post) {
+      return res.status(404).json({ status: 404, message: 'The post does not exist' });
     }
+    const comment = await Comment.findAll({
+      include: [{ model: User, attributes: ['id', 'avatar', 'firstName', 'lastName'] }],
+      where: { postId }
+    });
+
+    return res.status(200).json({ status: 200, data: comment });
   }
 
   /**
@@ -113,17 +100,13 @@ export default class PostController {
     const { currentUser } = req.body;
     const { postId } = req.params;
 
-    const post = await Post.findOne({ where: { id: postId } });
+    const post = await Post.findOne({ where: { id: postId, status: { [Op.not]: 'deleted' } } });
     if (!post) {
       return res.status(404).json({ status: 404, message: 'The post does not exist' });
     }
 
     if (post.get().userId !== currentUser.id) {
-      return res.status(404).json({ status: 404, message: 'Unauthorized action' });
-    }
-
-    if (post.get().status === 'deleted') {
-      return res.status(404).json({ status: 404, message: 'Post had already been deleted' });
+      return res.status(401).json({ status: 401, message: 'Unauthorized action' });
     }
 
     await post.update({ status: 'deleted', updatedAt: moment().format() });
@@ -135,7 +118,7 @@ export default class PostController {
    * @author Olivier
    * */
   static async publishPost(req, res) {
-    const { currentUser = {} } = req.body;
+    const { currentUser } = req.body;
     const { postId } = req.params;
     const post = await Post.findOne({
       include: [{ model: User, attributes: { exclude: ['password'] } }],
@@ -149,7 +132,7 @@ export default class PostController {
 
     // Checks if the user is not admin and if the post is a draft or unpublished post from another user
     if (post.get().userId !== currentUser.id) {
-      return res.status(404).json({ status: 404, message: 'Unauthorized access' });
+      return res.status(401).json({ status: 401, message: 'Unauthorized access' });
     }
 
     const status = post.get().status === 'published' ? 'unpublished' : 'published';
@@ -181,11 +164,11 @@ export default class PostController {
     });
 
     if (!post) {
-      return res.status(404).send({ message: 'The post does not exist' });
+      return res.status(404).send({ status: 404, message: 'The post does not exist' });
     }
 
     if (post.get().userId !== currentUser.id) {
-      return res.status(403).send({ message: 'Unauthorized access' });
+      return res.status(401).send({ status: 401, message: 'Unauthorized access' });
     }
 
     await post.update({ title, text, updatedAt: moment().format() });
@@ -202,26 +185,22 @@ export default class PostController {
   static async deleteComment(req, res) {
     const { id, postId } = req.params;
     const { currentUser } = req.body;
-    try {
-      const comment = await Comment.findOne({
-        where: {
-          id,
-          postId,
-          status: { [Op.not]: 'deleted' }
-        }
-      });
-      if (!comment) {
-        return res.status(404).send({ message: 'The comment does not exist' });
+    const comment = await Comment.findOne({
+      where: {
+        id,
+        postId,
+        status: { [Op.not]: 'deleted' }
       }
-      if (comment.get().userId !== currentUser.id) {
-        return res.status(403).send({ message: 'Unauthorized access' });
-      }
-
-      await comment.update({ status: 'deleted', updatedAt: moment().format() });
-
-      return res.status(200).send({ status: 200, message: 'The comment was deleted successfully' });
-    } catch (error) {
-      return res.status(400).send(error);
+    });
+    if (!comment) {
+      return res.status(404).send({ message: 'The comment does not exist' });
     }
+    if (comment.get().userId !== currentUser.id) {
+      return res.status(401).send({ status: 401, message: 'Unauthorized access' });
+    }
+
+    await comment.update({ status: 'deleted', updatedAt: moment().format() });
+
+    return res.status(200).send({ status: 200, message: 'The comment was deleted successfully' });
   }
 }

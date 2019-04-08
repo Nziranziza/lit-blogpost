@@ -3,6 +3,7 @@ import { celebrate } from 'celebrate';
 import verifyToken from '../middlewares/verifyToken';
 import { postController } from '../controllers';
 import { postValidator } from './validators';
+import { asyncHandler } from '../helpers';
 
 const router = express.Router();
 
@@ -15,16 +16,16 @@ router.post(
     body: postValidator.comment
   }),
   verifyToken(),
-  postController.commentPost
+  asyncHandler(postController.commentPost)
 );
 router.put('/:postId', verifyToken(), postController.editPost);
 router.post(
   '/',
   celebrate({ body: postValidator.createPost }),
   verifyToken(),
-  postController.createPost
+  asyncHandler(postController.createPost)
 );
-router.get('/:postId/comments', verifyToken(), postController.viewComment);
-router.delete('/:postId/comments/:id', verifyToken(), postController.deleteComment);
+router.get('/:postId/comments', verifyToken(), asyncHandler(postController.viewComment));
+router.delete('/:postId/comments/:id', verifyToken(), asyncHandler(postController.deleteComment));
 
 export default router;

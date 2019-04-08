@@ -2,6 +2,7 @@ import express from 'express';
 import { celebrate } from 'celebrate';
 import { authController } from '../controllers';
 import { authValidator } from './validators';
+import { asyncHandler } from '../helpers';
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.post(
   celebrate({
     body: authValidator.signup
   }),
-  authController.signup
+  asyncHandler(authController.signup)
 );
 
 router.post(
@@ -18,7 +19,7 @@ router.post(
   celebrate({
     body: authValidator.login
   }),
-  authController.login
+  asyncHandler(authController.login)
 );
 
 export default router;

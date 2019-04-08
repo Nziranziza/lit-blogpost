@@ -1,6 +1,5 @@
 import { Op } from 'sequelize';
 import { Post } from '../database/models';
-import logger from '../helpers/logger';
 
 class UserController {
   /**
@@ -17,15 +16,10 @@ class UserController {
       where.status[Op.and].push({ [Op.ne]: 'unpublished' });
       where.status[Op.and].push({ [Op.ne]: 'draft' });
     }
-    try {
-      const allPosts = await Post.findAll({
-        where
-      });
-      return res.status(200).json({ status: 200, data: allPosts });
-    } catch (err) {
-      logger.info(err.message);
-      res.status(404).json({ status: 404, message: 'Error' });
-    }
+    const allPosts = await Post.findAll({
+      where
+    });
+    return res.status(200).json({ status: 200, posts: allPosts });
   }
 }
 

@@ -1,4 +1,4 @@
-import { User } from '../../src/database/models';
+import { User } from '../../database/models';
 import { user } from '../mocks/db.json';
 
 describe('User model', () => {
