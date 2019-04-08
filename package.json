@@ -7,9 +7,8 @@
     "node": "10.15.1"
   },
   "scripts": {
-    "build": "babel ./server/src --out-dir ./server/dist",
-    "start": "npm run db:migrate:seed && npm run dev",
-    "dev": "nodemon --exec babel-node ./server/src/index.js",
+    "start": "npm run db:migrate:seed && babel-node ./index.js",
+    "dev": "nodemon --exec babel-node ./index.js",
     "test": "jest --coverage --runInBand --detectOpenHandles --forceExit",
     "coveralls": "jest --runInBand --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
@@ -37,6 +36,7 @@
     "helmet": "^3.15.0",
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.24.0",
+    "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
     "pg": "^7.8.0",
     "pg-hstore": "^2.3.2",
