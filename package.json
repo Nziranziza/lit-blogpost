@@ -7,8 +7,10 @@
     "node": "10.15.1"
   },
   "scripts": {
-    "start": "npm run db:migrate:seed && babel-node ./index.js",
-    "dev": "nodemon --exec babel-node ./index.js",
+    "start": "npm run db:migrate:seed && babel-node src/index.js",
+    "start:build": "npm run build && node dist/index.js",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir dist --ignore 'src/__tests__'",
     "test": "jest --coverage --runInBand --detectOpenHandles --forceExit",
     "coveralls": "jest --runInBand --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
@@ -46,6 +48,7 @@
     "winston": "^3.2.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.3",
     "@babel/core": "^7.2.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.0.0",
