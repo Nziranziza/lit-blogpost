@@ -13,5 +13,5 @@ module.exports = {
     'jest.config.js'
   ],
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['**/*.js']
+  collectCoverageFrom: ['src/**/*.js']
 };
