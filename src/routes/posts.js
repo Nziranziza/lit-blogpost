@@ -7,6 +7,7 @@ import { asyncHandler } from '../helpers';
 
 const router = express.Router();
 
+router.get('/', postController.getAllPosts);
 router.get('/:postId', verifyToken({ openAccess: true }), postController.viewPost);
 router.delete('/:postId', verifyToken(), postController.deletePost);
 router.put('/:postId/publish', verifyToken(), postController.publishPost);

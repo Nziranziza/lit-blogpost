@@ -26,7 +26,7 @@ export default class PostController {
     const { postId } = req.params;
     const protectedStatus = ['draft', 'unpublished'];
     const post = await Post.findOne({
-      include: [{ model: User, attributes: { exclude: ['password'] } }],
+      include: [{ model: User, as: 'author', attributes: { exclude: ['password'] } }],
       where: { id: postId },
       status: { [Op.not]: 'deleted' }
     });
@@ -55,13 +55,12 @@ export default class PostController {
     const { currentUser } = req.body;
     const user = currentUser.id;
     const { postId } = req.params;
-    let postComment;
     const post = await Post.findOne({ where: { id: postId, status: 'published' } });
 
     if (!post) {
       return res.status(404).json({ status: 404, message: 'The post does not exist' });
     }
-    postComment = await Comment.create({
+    const postComment = await Comment.create({
       userId: user,
       postId,
       ...body,
@@ -121,7 +120,7 @@ export default class PostController {
     const { currentUser } = req.body;
     const { postId } = req.params;
     const post = await Post.findOne({
-      include: [{ model: User, attributes: { exclude: ['password'] } }],
+      include: [{ model: User, as: 'author', attributes: { exclude: ['password'] } }],
       where: { id: postId },
       status: { [Op.not]: 'deleted' }
     });
@@ -154,6 +153,7 @@ export default class PostController {
       include: [
         {
           model: User,
+          as: 'author',
           attributes: { exclude: ['password'] }
         }
       ],
@@ -202,5 +202,27 @@ export default class PostController {
     await comment.update({ status: 'deleted', updatedAt: moment().format() });
 
     return res.status(200).send({ status: 200, message: 'The comment was deleted successfully' });
+  }
+
+  static async getAllPosts(req, res) {
+    const { limit = 20, offset: offsetQuery = 0, page: queryPage } = req.query;
+
+    const offset = queryPage ? queryPage - 1 : offsetQuery;
+    const page = queryPage || offset + 1;
+
+    const posts = await Post.findAndCountAll({
+      include: [{ model: User, as: 'author', attributes: { exclude: ['password'] } }],
+      offset: offset * limit,
+      where: { status: { [Op.not]: ['deleted', 'unpublished'] } },
+      limit
+    });
+
+    return res.status(200).json({
+      status: 200,
+      posts: posts.rows,
+      postsCount: posts.count,
+      pages: Math.ceil(posts.count / limit),
+      page
+    });
   }
 }
