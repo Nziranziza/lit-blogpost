@@ -36,7 +36,7 @@ describe('auth', () => {
     const res = await request(app)
       .post(`${urlPrefix}/auth/login`)
       .send({ email: 'fake@email.com', password: 'test@test' });
-    expect(res.status).toBe(404);
+    expect(res.status).toBe(401);
   });
 
   test('login- wrong password', async () => {

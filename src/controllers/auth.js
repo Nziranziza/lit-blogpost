@@ -39,7 +39,7 @@ export default class Auth {
     const user = await User.findOne({ where: { email: body.email } });
 
     if (!user) {
-      return res.status(404).json({ status: 404, message: 'User not found' });
+      return res.status(401).json({ status: 401, message: "Email and password don't match" });
     }
     const hashedPassword = await bcrypt.compare(body.password, user.get().password);
 
