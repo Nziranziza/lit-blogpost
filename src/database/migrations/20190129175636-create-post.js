@@ -8,7 +8,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       userId: Sequelize.UUID,
-      cover: Sequelize.TEXT,
+      cover: Sequelize.STRING,
       title: {
         type: Sequelize.STRING
       },
