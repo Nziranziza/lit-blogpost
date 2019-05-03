@@ -12,11 +12,9 @@ const { JWT_SECRET } = process.env;
  */
 const verifyToken = ({ userType = [], openAccess = false } = {}) => async (req, res, next) => {
   let user;
-  if (!req.headers) {
-    return res.status(401).json({ status: 401, message: 'Unauthorized access' });
-  }
   const { authorization = false } = req.headers;
-  if (!authorization) {
+
+  if (!authorization || authorization === 'undefined') {
     if (openAccess) {
       return next();
     }
